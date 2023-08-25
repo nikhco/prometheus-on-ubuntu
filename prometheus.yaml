@@ -1,0 +1,60 @@
+---
+- name: Install Prometheus
+  hosts: prometheus_servers
+  become: true
+  tasks:
+    - name: Install packages
+      apt:
+        name: "{{ packages }}"
+        update_cache: true
+        state: present
+      vars:
+        packages:
+          - prometheus
+          - nginx
+      notify:
+        - Reload Nginx
+
+  handlers:
+    - name: Reload Nginx
+      systemd:
+        name: nginx
+        state: restarted
+
+- name: Configure Prometheus on Primary
+  hosts: prometheus-primary
+  become: true
+  roles:
+    - prometheus.prometheus.prometheus
+  tasks:
+    - name: Configure Prometheus
+      template:
+        src: prometheus_config.yaml
+        dest: /etc/prometheus/prometheus.yaml
+      notify:
+        - Reload Prometheus
+
+  handlers:
+    - name: Reload Prometheus
+      systemd:
+        name: prometheus
+        state: restarted
+
+- name: Configure Prometheus on Secondary
+  hosts: prometheus-secondary
+  become: true
+  roles:
+    - prometheus.prometheus.prometheus
+  tasks:
+    - name: Configure Prometheus
+      template:
+        src: prometheus_config_secondary.yaml
+        dest: /etc/prometheus/prometheus.yaml
+      notify:
+        - Reload Prometheus
+
+  handlers:
+    - name: Reload Prometheus
+      systemd:
+        name: prometheus
+        state: restarted
