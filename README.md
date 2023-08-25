@@ -21,7 +21,7 @@ To use this repo, please follow these instructions -
 9. Replace `<primary_ip>` and `<secondary_ip>` in the `inventory.ini` and the `prometheus_config.yaml` files. Ensure the path of the `prometheus_key_pair.pem` file is correct.
 10. Now, you can run ansible, with the command `ansible-playbook -i inventory.ini prometheus.yaml`
 11. Once the ansible setup is complete, you can now visit the Prometheus servers on port `9090` of the public IPs of the servers to view the data being collected. The graphs on the Primary server will include data from the Secondary server as well. My favorite to look at is `process_cpu_seconds_total`, which shows the CPU usage of the Prometheus servers over time.
-12. Once your work is complete, don't forget to wipe the AWS resources using `terraform destroy -auto-approve` to ensure you're not footing an unnecessary bill :)
+12. Once your work is complete, don't forget to wipe the AWS resources using `terraform destroy -auto-approve` to ensure you're not footing an unnecessary bill 🙂
 
 # File Structure
 The relevant files in this repo are as follows - 
