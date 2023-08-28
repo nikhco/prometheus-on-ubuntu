@@ -1,4 +1,4 @@
-# automatic-carnival
+# prometheus-on-ubuntu
 terraform + ansible to setup a prometheus cluster on an Ubuntu pair in AWS
 
 # Introduction
